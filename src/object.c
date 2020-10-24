@@ -18,9 +18,9 @@
  * 
  */
 
+#include "object.h"
 #include "vector.h"
 #include "matrix.h"
-#include "object.h"
 
 sphere Sphere(vec3 p, double radius, double roll, double pitch, double yaw) {
 	sphere obj = {0};

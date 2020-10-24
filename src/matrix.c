@@ -20,7 +20,7 @@
 
 #include "matrix.h"
 
-mat3 Mat3(double m11, double m12, double m13, double m21, double m22, double m23, double m31, double m32, double m33) {
+inline mat3 Mat3(double m11, double m12, double m13, double m21, double m22, double m23, double m31, double m32, double m33) {
 	mat3 m;
 	m.m11 = m11; m.m12 = m12; m.m13 = m13;
 	m.m21 = m21; m.m22 = m22; m.m23 = m23;
@@ -28,14 +28,14 @@ mat3 Mat3(double m11, double m12, double m13, double m21, double m22, double m23
 	return m;
 }
 
-mat2 Mat2(double m11, double m12, double m21, double m22) {
+inline mat2 Mat2(double m11, double m12, double m21, double m22) {
 	mat2 m;
 	m.m11 = m11; m.m12 = m12;
 	m.m21 = m21; m.m22 = m22;
 	return m;
 }
 
-mat3 prod_m3(mat3 A, mat3 B) {
+inline mat3 prod_m3(mat3 A, mat3 B) {
 	return Mat3(
 			A.m11*B.m11 + A.m12*B.m21 + A.m13*B.m31, A.m11*B.m12 + A.m12*B.m22 + A.m13*B.m32, A.m11*B.m13 + A.m12*B.m23 + A.m13*B.m33,
 			A.m21*B.m11 + A.m22*B.m21 + A.m23*B.m31, A.m21*B.m12 + A.m22*B.m22 + A.m23*B.m32, A.m21*B.m13 + A.m22*B.m23 + A.m23*B.m33,
@@ -43,11 +43,11 @@ mat3 prod_m3(mat3 A, mat3 B) {
 		);
 }
 
-double determinant_m3(mat3 m) {
+inline double determinant_m3(mat3 m) {
 	return m.m11*m.m22*m.m33 + m.m12*m.m23*m.m31 + m.m13*m.m21*m.m32 - m.m13*m.m22*m.m31 - m.m12*m.m21*m.m33 - m.m11*m.m23*m.m32;
 }
 
-mat3 invert_m3(mat3 A) {
+inline mat3 invert_m3(mat3 A) {
 	mat3 A_cofactor = Mat3(
 			A.m22*A.m33 - A.m23*A.m32, -(A.m12*A.m33 - A.m13*A.m32), A.m12*A.m23 - A.m13*A.m22,
 			-(A.m21*A.m33 - A.m23*A.m31), A.m11*A.m33 - A.m13*A.m31, -(A.m11*A.m23 - A.m13*A.m21),

@@ -21,8 +21,6 @@
 #include "ray.h"
 #include "vector.h"
 #include "macro.h"
-#include "sdf.h"
-#include "object.h"
 #include "scene.h"
 
 int beam_hit(scene *s, vec3 p, vec3 v, double len) {

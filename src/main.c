@@ -18,15 +18,12 @@
  * 
  */
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <math.h>
-#include <omp.h>
 
 #include "macro.h"
 #include "output.h"
 #include "camera.h"
+#include "vector.h"
 #include "object.h"
 #include "scene.h"
 

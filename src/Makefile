@@ -21,8 +21,8 @@
 
 PROG := main
 CC := gcc
-CFLAGS := -fopenmp -O2 -Wall -W -std=c99
-LDFLAGS := -fopenmp -lm
+CFLAGS := -fopenmp -Wall -W -std=c99 -Ofast -march=native -flto
+LDFLAGS := $(CFLAGS) -lm
 SRCS := $(wildcard *.c)
 OBJS := $(SRCS:.c=.o)
 DEPS := $(SRCS:.c=.d)

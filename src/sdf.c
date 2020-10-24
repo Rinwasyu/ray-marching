@@ -18,20 +18,21 @@
  * 
  */
 
+#include "sdf.h"
 #include "vector.h"
 #include "macro.h"
 
-double sdf_sphere(vec3 v, double radius) {
+inline double sdf_sphere(vec3 v, double radius) {
 	return len_v3(v) - radius;
 }
 
-double sdf_box(vec3 p, vec3 b) {
+inline double sdf_box(vec3 p, vec3 b) {
 	vec3 q = diff_v3(abs_v3(p), b);
 	return len_v3(max_v3(q, Vec3(0,0,0))) + MIN(MAX(q.x, MAX(q.y, q.z)), 0);
 	//return len_v3(max_v3(diff_v3(abs_v3(p), b), Vec3(0, 0, 0)));
 }
 
-double sdf_torus(vec3 p, vec2 t) {
+inline double sdf_torus(vec3 p, vec2 t) {
 	vec2 q = Vec2(len_v2(Vec2(p.x, p.z))-t.x, p.y);
 	return len_v2(q)-t.y;
 }

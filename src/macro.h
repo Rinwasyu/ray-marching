@@ -18,8 +18,13 @@
  * 
  */
 
+#ifndef MACRO_H
+#define MACRO_H
+
 #define PI 3.1415927
 #define ABS(a) ((a) < 0 ? -(a) : (a))
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 #define INF 1000000000
+
+#endif

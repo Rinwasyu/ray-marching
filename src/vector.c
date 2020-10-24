@@ -19,14 +19,13 @@
  */
 
 #include <stdio.h>
-#include <string.h>
 #include <math.h>
 
 #include "vector.h"
 #include "matrix.h"
 #include "macro.h"
 
-vec3 Vec3(double x, double y, double z) {
+inline vec3 Vec3(double x, double y, double z) {
 	vec3 v;
 	v.x = x;
 	v.y = y;
@@ -34,50 +33,50 @@ vec3 Vec3(double x, double y, double z) {
 	return v;
 }
 
-vec2 Vec2(double x, double y) {
+inline vec2 Vec2(double x, double y) {
 	vec2 v;
 	v.x = x;
 	v.y = y;
 	return v;
 }
 
-double len_v3(vec3 v) {
+inline double len_v3(vec3 v) {
 	return sqrt(v.x*v.x + v.y*v.y + v.z*v.z);
 }
 
-double len_v2(vec2 v) {
+inline double len_v2(vec2 v) {
 	return sqrt(v.x*v.x + v.y*v.y);
 }
 
-vec3 abs_v3(vec3 v) {
+inline vec3 abs_v3(vec3 v) {
 	return Vec3(MAX(v.x, -v.x), MAX(v.y, -v.y), MAX(v.z, -v.z));
 }
 
-vec2 abs_v2(vec2 v) {
+inline vec2 abs_v2(vec2 v) {
 	return Vec2(MAX(v.x, -v.x), MAX(v.y, -v.y));
 }
 
-vec3 sum_v3(vec3 A, vec3 B) {
+inline vec3 sum_v3(vec3 A, vec3 B) {
 	return Vec3(A.x+B.x, A.y+B.y, A.z+B.z);
 }
 
-vec3 diff_v3(vec3 A, vec3 B) {
+inline vec3 diff_v3(vec3 A, vec3 B) {
 	return Vec3(A.x-B.x, A.y-B.y, A.z-B.z);
 }
 
-vec3 prod_v3(vec3 A, vec3 B) {
+inline vec3 prod_v3(vec3 A, vec3 B) {
 	return Vec3(A.x*B.x, A.y*B.y, A.z*B.z);
 }
 
-vec3 norm_v3(vec3 v) {
+inline vec3 norm_v3(vec3 v) {
 	return Vec3(v.x/len_v3(v), v.y/len_v3(v), v.z/len_v3(v));
 }
 
-double innerprod_v3(vec3 A, vec3 B) {
+inline double innerprod_v3(vec3 A, vec3 B) {
 	return A.x*B.x + A.y*B.y + A.z*B.z;
 }
 
-vec3 rot_v3(vec3 from, mat3 m) {
+inline vec3 rot_v3(vec3 from, mat3 m) {
 	return Vec3(
 			m.m11*from.x + m.m12*from.y + m.m13*from.z,
 			m.m21*from.x + m.m22*from.y + m.m23*from.z,
@@ -85,7 +84,7 @@ vec3 rot_v3(vec3 from, mat3 m) {
 		);
 }
 
-vec3 max_v3(vec3 A, vec3 B) {
+inline vec3 max_v3(vec3 A, vec3 B) {
 	vec3 v;
 	v.x = MAX(A.x, B.x);
 	v.y = MAX(A.y, B.y);
@@ -93,7 +92,7 @@ vec3 max_v3(vec3 A, vec3 B) {
 	return v;
 }
 
-vec3 min_v3(vec3 A, vec3 B) {
+inline vec3 min_v3(vec3 A, vec3 B) {
 	vec3 v;
 	v.x = MIN(A.x, B.x);
 	v.y = MAX(A.y, B.y);
@@ -101,6 +100,6 @@ vec3 min_v3(vec3 A, vec3 B) {
 	return v;
 }
 
-void print_v3(vec3 v) {
+inline void print_v3(vec3 v) {
 	printf("(%.3lf, %.3lf, %.3lf)\n", v.x, v.y, v.z);
 }

@@ -23,12 +23,8 @@
 #include <omp.h>
 
 #include "camera.h"
-#include "macro.h"
 #include "ray.h"
 #include "vector.h"
-#include "matrix.h"
-#include "output.h"
-#include "scene.h"
 
 void fishEyeCam(scene *s, vec3 camera_pos, double roll, double pitch, double yaw, double range_roll, double range_pitch, double range_yaw, double **img, int width, int height) {
 	int cnt = 0;

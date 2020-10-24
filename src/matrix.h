@@ -39,5 +39,7 @@ mat3 Mat3(double m11, double m12, double m13, double m21, double m22, double m23
 mat2 Mat2(double m11, double m12, double m21, double m22);
 mat3 prod_m3(mat3 A, mat3 B);
 mat3 invert_m3(mat3 m);
+double determinant_m3(mat3 m);
+mat3 invert_m3(mat3 A);
 
 #endif

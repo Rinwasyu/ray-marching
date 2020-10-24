@@ -20,6 +20,8 @@
 
 #include <stdio.h>
 
+#include "output.h"
+
 void output_image(char *filename, double **img, int width, int height) {
 	FILE *fp;
 	if ((fp = fopen(filename, "wb")) == NULL) {
