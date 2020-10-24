@@ -31,27 +31,26 @@
 #include "scene.h"
 
 int main(void) {
-	int width = 500;
-	int height = 500;
+	int width = 300;
+	int height = 300;
 	double **img = (double **)malloc(sizeof(double *) * height);
 	for (int i = 0; i < height; i++) {
 		img[i] = (double *)malloc(sizeof(double) * width);
 	}
 	
 	scene s = Scene(scene_sdf);
-	s.spheres[0] = Sphere(Vec3(0, 4, 0), 3);
-	s.spheres[1] = Sphere(Vec3(0, 2, 5), 2);
+	s.spheres[0] = Sphere(Vec3(0, 4, 0), 3, 0, 0, 0);
+	s.spheres[1] = Sphere(Vec3(0, 2, 5), 2, 0, 0, 0);
 	s.spheres_cnt = 2;
-	s.boxes[0] = Box(Vec3(0, 0, 0), Vec3(10, 0.5, 10));
-	s.boxes[1] = Box(Vec3(5, 0, 5), Vec3(1, 5, 1));
-	s.boxes[2] = Box(Vec3(7, 0, -7), Vec3(0.1, 10, 0.1));
+	s.boxes[0] = Box(Vec3(0, -0.25, 0), Vec3(10, 0.5, 10), 0, 0, 0);
+	s.boxes[1] = Box(Vec3(7, 2.5, 0), Vec3(1, 2.5, 1), 0, 0, 0);
+	s.boxes[2] = Box(Vec3(7, 5, -7), Vec3(0.1, 5, 0.1), 0, 0, 0);
 	s.boxes_cnt = 3;
-	s.toruses[0] = Torus(Vec3(0, 5, 5), Vec2(1, 0.05));
+	s.toruses[0] = Torus(Vec3(7, 2.5, 7), Vec2(1.5, 0.8), PI/2+PI/5, -PI/3, 0);
 	s.toruses_cnt = 1;
 	
 	vec3 camera_pos = Vec3(14, 13, 20);
 	
-	//vec3 camera_pos = Vec3(0, 30, 0);
 	double roll = PI/6;
 	double pitch = -PI/5;
 	double yaw = 0;

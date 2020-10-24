@@ -34,3 +34,29 @@ mat2 Mat2(double m11, double m12, double m21, double m22) {
 	m.m21 = m21; m.m22 = m22;
 	return m;
 }
+
+mat3 prod_m3(mat3 A, mat3 B) {
+	return Mat3(
+			A.m11*B.m11 + A.m12*B.m21 + A.m13*B.m31, A.m11*B.m12 + A.m12*B.m22 + A.m13*B.m32, A.m11*B.m13 + A.m12*B.m23 + A.m13*B.m33,
+			A.m21*B.m11 + A.m22*B.m21 + A.m23*B.m31, A.m21*B.m12 + A.m22*B.m22 + A.m23*B.m32, A.m21*B.m13 + A.m22*B.m23 + A.m23*B.m33,
+			A.m31*B.m11 + A.m32*B.m21 + A.m33*B.m31, A.m31*B.m12 + A.m32*B.m22 + A.m33*B.m32, A.m31*B.m13 + A.m32*B.m23 + A.m33*B.m33
+		);
+}
+
+double determinant_m3(mat3 m) {
+	return m.m11*m.m22*m.m33 + m.m12*m.m23*m.m31 + m.m13*m.m21*m.m32 - m.m13*m.m22*m.m31 - m.m12*m.m21*m.m33 - m.m11*m.m23*m.m32;
+}
+
+mat3 invert_m3(mat3 A) {
+	mat3 A_cofactor = Mat3(
+			A.m22*A.m33 - A.m23*A.m32, -(A.m12*A.m33 - A.m13*A.m32), A.m12*A.m23 - A.m13*A.m22,
+			-(A.m21*A.m33 - A.m23*A.m31), A.m11*A.m33 - A.m13*A.m31, -(A.m11*A.m23 - A.m13*A.m21),
+			A.m21*A.m32 - A.m22*A.m31, -(A.m11*A.m32 - A.m12*A.m31), A.m11*A.m22 - A.m12*A.m21
+		);
+	mat3 A_inverce = Mat3(
+			A_cofactor.m11/determinant_m3(A), A_cofactor.m12/determinant_m3(A), A_cofactor.m13/determinant_m3(A),
+			A_cofactor.m21/determinant_m3(A), A_cofactor.m22/determinant_m3(A), A_cofactor.m23/determinant_m3(A),
+			A_cofactor.m31/determinant_m3(A), A_cofactor.m32/determinant_m3(A), A_cofactor.m33/determinant_m3(A)
+		);
+	return A_inverce;
+}

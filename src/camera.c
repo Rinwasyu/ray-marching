@@ -93,8 +93,7 @@ void cam(scene *s, vec3 camera_pos, double roll, double pitch, double yaw, doubl
 			img[i][j] = beam(s, camera_pos, norm_v3(rot_v3(rot_v3(rot_v3(Vec3(sx, sy, -4), r_x), r_y), r_z)), 40);
 		}
 		cnt += width;
-		//printf("\e[Hgenerating...(%d%%)", (int)((double)cnt/width/height*100));
-		printf("\e[Hrendering... %d/%d (%d%%)", cnt, width*height, (int)((double)cnt/width/height*100));
+		printf("\rrendering... %d/%d (%d%%)", cnt, width*height, (int)((double)cnt/width/height*100));
 		fflush(stdout);
 	}
 }

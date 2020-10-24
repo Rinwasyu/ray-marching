@@ -47,7 +47,7 @@ double beam(scene *s, vec3 p, vec3 v, double len) {
 		double dist = len * i / split;
 		
 		vec3 here = Vec3(p.x + v.x*dist, p.y + v.y*dist, p.z + v.z*dist);
-		vec3 ray = norm_v3(Vec3(-1.3, -0.8, 0.1));
+		vec3 ray = norm_v3(Vec3(-1.3, -0.8, -0.5));
 		
 		if (s->sdf(s, here) < 0.01) {
 			double ep = 0.001;

@@ -27,26 +27,35 @@ struct o_sphere {
 	int active;
 	vec3 p;
 	double radius;
+	double roll;
+	double pitch;
+	double yaw;
 };
 
 struct o_box {
 	int active;
 	vec3 p;
 	vec3 b;
+	double roll;
+	double pitch;
+	double yaw;
 };
 
 struct o_torus {
 	int active;
 	vec3 p;
 	vec2 t;
+	double roll;
+	double pitch;
+	double yaw;
 };
 
 typedef struct o_sphere sphere;
 typedef struct o_box box;
 typedef struct o_torus torus;
 
-sphere Sphere(vec3 p, double radius);
-box Box(vec3 p, vec3 b);
-torus Torus(vec3 p, vec2 t);
+sphere Sphere(vec3 p, double radius, double roll, double pitch, double yaw);
+box Box(vec3 p, vec3 b, double roll, double pitch, double yaw);
+torus Torus(vec3 p, vec2 t, double roll, double pitch, double yaw);
 
 #endif

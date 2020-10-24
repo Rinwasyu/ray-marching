@@ -37,5 +37,7 @@ typedef struct m_mat3 mat3;
 
 mat3 Mat3(double m11, double m12, double m13, double m21, double m22, double m23, double m31, double m32, double m33);
 mat2 Mat2(double m11, double m12, double m21, double m22);
+mat3 prod_m3(mat3 A, mat3 B);
+mat3 invert_m3(mat3 m);
 
 #endif

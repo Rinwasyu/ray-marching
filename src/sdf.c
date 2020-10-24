@@ -32,6 +32,6 @@ double sdf_box(vec3 p, vec3 b) {
 }
 
 double sdf_torus(vec3 p, vec2 t) {
-	vec2 q = Vec2(len_v2(Vec2(p.x, p.y))-t.x, p.y);
+	vec2 q = Vec2(len_v2(Vec2(p.x, p.z))-t.x, p.y);
 	return len_v2(q)-t.y;
 }

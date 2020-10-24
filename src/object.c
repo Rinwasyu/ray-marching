@@ -22,26 +22,35 @@
 #include "matrix.h"
 #include "object.h"
 
-sphere Sphere(vec3 p, double radius) {
-	sphere obj;
+sphere Sphere(vec3 p, double radius, double roll, double pitch, double yaw) {
+	sphere obj = {0};
 	obj.active = 1;
 	obj.p = p;
 	obj.radius = radius;
+	obj.roll = roll;
+	obj.pitch = pitch;
+	obj.yaw = yaw;
 	return obj;
 }
 
-box Box(vec3 p, vec3 b) {
-	box obj;
+box Box(vec3 p, vec3 b, double roll, double pitch, double yaw) {
+	box obj = {0};
 	obj.active = 1;
 	obj.p = p;
 	obj.b = b;
+	obj.roll = roll;
+	obj.pitch = pitch;
+	obj.yaw = yaw;
 	return obj;
 }
 
-torus Torus(vec3 p, vec2 t) {
-	torus obj;
+torus Torus(vec3 p, vec2 t, double roll, double pitch, double yaw) {
+	torus obj = {0};
 	obj.active = 1;
 	obj.p = p;
 	obj.t = t;
+	obj.roll = roll;
+	obj.pitch = pitch;
+	obj.yaw = yaw;
 	return obj;
 }
