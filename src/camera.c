@@ -28,8 +28,9 @@
 #include "vector.h"
 #include "matrix.h"
 #include "output.h"
+#include "scene.h"
 
-void fishEyeCam(vec3 camera_pos, double roll, double pitch, double yaw, double range_roll, double range_pitch, double range_yaw, double **img, int width, int height) {
+void fishEyeCam(scene *s, vec3 camera_pos, double roll, double pitch, double yaw, double range_roll, double range_pitch, double range_yaw, double **img, int width, int height) {
 	int cnt = 0;
 	
 	#pragma omp parallel for shared(cnt)// num_threads(32)
@@ -54,7 +55,7 @@ void fishEyeCam(vec3 camera_pos, double roll, double pitch, double yaw, double r
 					-sin(beam_yaw), cos(beam_yaw), 0,
 					0, 0, 1
 				);
-			double color = beam(camera_pos, norm_v3(rot_v3(rot_v3(rot_v3(angle, r_x), r_y), r_z)), 50);
+			double color = beam(s, camera_pos, norm_v3(rot_v3(rot_v3(rot_v3(angle, r_x), r_y), r_z)), 50);
 			img[i][j] = color;
 			//printf("%s", color > 0 ? "#" : " ");
 			cnt++;
@@ -65,7 +66,7 @@ void fishEyeCam(vec3 camera_pos, double roll, double pitch, double yaw, double r
 	}
 }
 
-void cam(vec3 camera_pos, double roll, double pitch, double yaw, double **img, int width, int height) {
+void cam(scene *s, vec3 camera_pos, double roll, double pitch, double yaw, double **img, int width, int height) {
 	mat3 r_x = Mat3(
 			1, 0, 0,
 			0, cos(roll), sin(roll),
@@ -89,7 +90,7 @@ void cam(vec3 camera_pos, double roll, double pitch, double yaw, double **img, i
 			double sx = -2+j*4.0/width;
 			double sy = 2-i*4.0/height;
 			
-			img[i][j] = beam(camera_pos, norm_v3(rot_v3(rot_v3(rot_v3(Vec3(sx, sy, -4), r_x), r_y), r_z)), 40);
+			img[i][j] = beam(s, camera_pos, norm_v3(rot_v3(rot_v3(rot_v3(Vec3(sx, sy, -4), r_x), r_y), r_z)), 40);
 		}
 		cnt += width;
 		//printf("\e[Hgenerating...(%d%%)", (int)((double)cnt/width/height*100));

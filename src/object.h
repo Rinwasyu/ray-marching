@@ -35,13 +35,18 @@ struct o_box {
 	vec3 b;
 };
 
+struct o_torus {
+	int active;
+	vec3 p;
+	vec2 t;
+};
+
 typedef struct o_sphere sphere;
 typedef struct o_box box;
-
-extern sphere spheres[16];
-extern box boxes[16];
+typedef struct o_torus torus;
 
 sphere Sphere(vec3 p, double radius);
 box Box(vec3 p, vec3 b);
+torus Torus(vec3 p, vec2 t);
 
 #endif

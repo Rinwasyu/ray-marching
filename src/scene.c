@@ -18,20 +18,36 @@
  * 
  */
 
+#include "scene.h"
 #include "vector.h"
 #include "macro.h"
+#include "sdf.h"
 
-double sdf_sphere(vec3 v, double radius) {
-	return len_v3(v) - radius;
+scene Scene(double (*sdf)()) {
+	scene s = {0};
+	s.sdf = sdf;
+	return s;
 }
 
-double sdf_box(vec3 p, vec3 b) {
-	vec3 q = diff_v3(abs_v3(p), b);
-	return len_v3(max_v3(q, Vec3(0,0,0))) + MIN(MAX(q.x, MAX(q.y, q.z)), 0);
-	//return len_v3(max_v3(diff_v3(abs_v3(p), b), Vec3(0, 0, 0)));
-}
-
-double sdf_torus(vec3 p, vec2 t) {
-	vec2 q = Vec2(len_v2(Vec2(p.x, p.y))-t.x, p.y);
-	return len_v2(q)-t.y;
+double scene_sdf(scene *s, vec3 p) {
+	double min_dist = INF;
+	for (int i = 0; i < s->spheres_cnt; i++) {
+		if (s->spheres[i].active) {
+			min_dist = MIN(sdf_sphere(diff_v3(s->spheres[i].p, p), s->spheres[i].radius), min_dist);
+		}
+	}
+	
+	for (int i = 0; i < s->boxes_cnt; i++) {
+		if (s->boxes[i].active) {
+			min_dist = MIN(sdf_box(diff_v3(s->boxes[i].p, p), s->boxes[i].b), min_dist);
+		}
+	}
+	
+	for (int i = 0; i < s->toruses_cnt; i++) {
+		if (s->toruses[i].active) {
+			min_dist = MIN(sdf_torus(diff_v3(s->toruses[i].p, p), s->toruses[i].t), min_dist);
+		}
+	}
+	
+	return min_dist;
 }

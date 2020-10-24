@@ -22,21 +22,26 @@
 #include "matrix.h"
 #include "object.h"
 
-sphere spheres[16] = {0};
-box boxes[16] = {0};
-
 sphere Sphere(vec3 p, double radius) {
-	sphere s;
-	s.active = 1;
-	s.p = p;
-	s.radius = radius;
-	return s;
+	sphere obj;
+	obj.active = 1;
+	obj.p = p;
+	obj.radius = radius;
+	return obj;
 }
 
 box Box(vec3 p, vec3 b) {
-	box o;
-	o.active = 1;
-	o.p = p;
-	o.b = b;
-	return o;
+	box obj;
+	obj.active = 1;
+	obj.p = p;
+	obj.b = b;
+	return obj;
+}
+
+torus Torus(vec3 p, vec2 t) {
+	torus obj;
+	obj.active = 1;
+	obj.p = p;
+	obj.t = t;
+	return obj;
 }

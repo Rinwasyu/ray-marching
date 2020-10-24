@@ -18,20 +18,25 @@
  * 
  */
 
-#include "vector.h"
-#include "macro.h"
+#ifndef SCENE_H
+#define SCENE_H
 
-double sdf_sphere(vec3 v, double radius) {
-	return len_v3(v) - radius;
-}
+#include "object.h"
 
-double sdf_box(vec3 p, vec3 b) {
-	vec3 q = diff_v3(abs_v3(p), b);
-	return len_v3(max_v3(q, Vec3(0,0,0))) + MIN(MAX(q.x, MAX(q.y, q.z)), 0);
-	//return len_v3(max_v3(diff_v3(abs_v3(p), b), Vec3(0, 0, 0)));
-}
+struct s_scene;
+typedef struct s_scene scene;
 
-double sdf_torus(vec3 p, vec2 t) {
-	vec2 q = Vec2(len_v2(Vec2(p.x, p.y))-t.x, p.y);
-	return len_v2(q)-t.y;
-}
+struct s_scene {
+	sphere spheres[1024];
+	box boxes[1024];
+	torus toruses[1024];
+	int spheres_cnt;
+	int boxes_cnt;
+	int toruses_cnt;
+	double (*sdf)();
+};
+
+scene Scene(double (*sdf)());
+double scene_sdf(scene *s, vec3 p);
+
+#endif

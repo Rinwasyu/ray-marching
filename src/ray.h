@@ -22,8 +22,9 @@
 #define RAY_H
 
 #include "vector.h"
+#include "scene.h"
 
-double beam(vec3 p, vec3 v, double len);
-int beam_hit(vec3 p, vec3 v, double len);
+double beam(scene *s, vec3 p, vec3 v, double len);
+int beam_hit(scene *s, vec3 p, vec3 v, double len);
 
 #endif

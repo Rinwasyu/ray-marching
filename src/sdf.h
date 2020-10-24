@@ -22,3 +22,4 @@
 
 double sdf_sphere(vec3 v, double radius);
 double sdf_box(vec3 p, vec3 b);
+double sdf_torus(vec3 p, vec2 t);

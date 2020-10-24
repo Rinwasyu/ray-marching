@@ -22,7 +22,9 @@
 #define CAMERA_H
 
 #include "vector.h"
-void fishEyeCam(vec3 camera_pos, double roll, double pitch, double yaw, double range_roll, double range_pitch, double range_yaw, double **img, int width, int height);
-void cam(vec3 camera_pos, double roll, double pitch, double yaw, double **img, int width, int height);
+#include "scene.h"
+
+void fishEyeCam(scene *s, vec3 camera_pos, double roll, double pitch, double yaw, double range_roll, double range_pitch, double range_yaw, double **img, int width, int height);
+void cam(scene *s, vec3 camera_pos, double roll, double pitch, double yaw, double **img, int width, int height);
 
 #endif

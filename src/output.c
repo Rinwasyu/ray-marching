@@ -18,7 +18,7 @@
  * 
  */
 
-#include "stdio.h"
+#include <stdio.h>
 
 void output_image(char *filename, double **img, int width, int height) {
 	FILE *fp;
