@@ -21,6 +21,8 @@
 #ifndef OUTPUT_H
 #define OUTPUT_H
 
-void output_image(char *filename, double **img, int width, int height);
+#include "color.h"
+
+void output_image(char *filename, rgb **img, int width, int height);
 
 #endif

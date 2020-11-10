@@ -21,8 +21,9 @@
 #include "object.h"
 #include "vector.h"
 #include "matrix.h"
+#include "color.h"
 
-sphere Sphere(vec3 p, double radius, double roll, double pitch, double yaw) {
+inline sphere Sphere(vec3 p, double radius, double roll, double pitch, double yaw, rgb color) {
 	sphere obj = {0};
 	obj.active = 1;
 	obj.p = p;
@@ -30,10 +31,11 @@ sphere Sphere(vec3 p, double radius, double roll, double pitch, double yaw) {
 	obj.roll = roll;
 	obj.pitch = pitch;
 	obj.yaw = yaw;
+	obj.color = color;
 	return obj;
 }
 
-box Box(vec3 p, vec3 b, double roll, double pitch, double yaw) {
+inline box Box(vec3 p, vec3 b, double roll, double pitch, double yaw, rgb color) {
 	box obj = {0};
 	obj.active = 1;
 	obj.p = p;
@@ -41,10 +43,11 @@ box Box(vec3 p, vec3 b, double roll, double pitch, double yaw) {
 	obj.roll = roll;
 	obj.pitch = pitch;
 	obj.yaw = yaw;
+	obj.color = color;
 	return obj;
 }
 
-torus Torus(vec3 p, vec2 t, double roll, double pitch, double yaw) {
+inline torus Torus(vec3 p, vec2 t, double roll, double pitch, double yaw, rgb color) {
 	torus obj = {0};
 	obj.active = 1;
 	obj.p = p;
@@ -52,5 +55,6 @@ torus Torus(vec3 p, vec2 t, double roll, double pitch, double yaw) {
 	obj.roll = roll;
 	obj.pitch = pitch;
 	obj.yaw = yaw;
+	obj.color = color;
 	return obj;
 }

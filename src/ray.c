@@ -22,24 +22,26 @@
 #include "vector.h"
 #include "macro.h"
 #include "scene.h"
+#include "color.h"
 
 int beam_hit(scene *s, vec3 p, vec3 v, double len) {
-	int split = len*200;
+	int split = len*50;
 	
 	for (int i = 0; i <= split; i++) {
 		double dist = len * i / split;
 		
 		vec3 here = Vec3(p.x + v.x*dist, p.y + v.y*dist, p.z + v.z*dist);
 		
-		if (s->sdf(s, here) < 0.01) {
+		if (s->sdf(s, here, 0) < 0.01) {
 			return 1;
 		}
 	}
 	return 0;
 }
 
-double beam(scene *s, vec3 p, vec3 v, double len) {
-	int split = len*200;
+rgb beam(scene *s, vec3 p, vec3 v, double len) {
+	rgb color = Rgb(0, 0, 0);
+	int split = len*50;
 	
 	for (int i = 0; i <= split; i++) {
 		double dist = len * i / split;
@@ -47,8 +49,8 @@ double beam(scene *s, vec3 p, vec3 v, double len) {
 		vec3 here = Vec3(p.x + v.x*dist, p.y + v.y*dist, p.z + v.z*dist);
 		vec3 ray = norm_v3(Vec3(-1.3, -0.8, -0.5));
 		
-		if (s->sdf(s, here) < 0.01) {
-			double ep = 0.001;
+		if (s->sdf(s, here, 1) < 0.01) {
+			double ep = 0.0001;
 			
 			vec3 normal = norm_v3(
 					Vec3(
@@ -58,16 +60,13 @@ double beam(scene *s, vec3 p, vec3 v, double len) {
 					)
 				);
 			
-			double diffuse = 0;
+			rgb diffuse = Rgb(0, 0, 0);
 			if (beam_hit(s, diff_v3(here, Vec3(v.x*len/split, v.y*len/split, v.z*len/split)), Vec3(-ray.x, -ray.y, -ray.z), 20) == 0){
-				diffuse = MAX(innerprod_v3(normal, ray), 0);
+				double brightness = MAX(innerprod_v3(normal, ray), 0);
+				diffuse = Rgb(s->near_obj_color.r * brightness, s->near_obj_color.g * brightness, s->near_obj_color.b * brightness);
 			}
-			double ambient = 0.05;
-			double specular = 0;
-			//specular = innerprod_v3(norm_v3(sum_v3(norm_v3(to_ball), ray)), normal);
-			double color = ambient + diffuse + specular;
-			return (color > 1 ? 1 : color);
+			return diffuse;
 		}
 	}
-	return 0;
+	return color;
 }

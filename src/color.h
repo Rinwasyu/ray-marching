@@ -18,48 +18,25 @@
  * 
  */
 
-#ifndef OBJECT_H
-#define OBJECT_H
+#ifndef COLOR_H
+#define COLOR_H
 
-#include "vector.h"
-#include "color.h"
-
-struct o_sphere {
-	int active;
-	vec3 p;
-	double radius;
-	double roll;
-	double pitch;
-	double yaw;
-	rgb color;
+struct c_rgb {
+	double r;
+	double g;
+	double b;
 };
 
-struct o_box {
-	int active;
-	vec3 p;
-	vec3 b;
-	double roll;
-	double pitch;
-	double yaw;
-	rgb color;
+struct c_rgba {
+	double r;
+	double g;
+	double b;
+	double a;
 };
 
-struct o_torus {
-	int active;
-	vec3 p;
-	vec2 t;
-	double roll;
-	double pitch;
-	double yaw;
-	rgb color;
-};
+typedef struct c_rgb rgb;
+typedef struct c_rgba rgba;
 
-typedef struct o_sphere sphere;
-typedef struct o_box box;
-typedef struct o_torus torus;
-
-sphere Sphere(vec3 p, double radius, double roll, double pitch, double yaw, rgb color);
-box Box(vec3 p, vec3 b, double roll, double pitch, double yaw, rgb color);
-torus Torus(vec3 p, vec2 t, double roll, double pitch, double yaw, rgb color);
+rgb Rgb(double r, double g, double b);
 
 #endif

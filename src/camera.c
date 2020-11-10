@@ -25,11 +25,12 @@
 #include "camera.h"
 #include "ray.h"
 #include "vector.h"
+#include "color.h"
 
-void fishEyeCam(scene *s, vec3 camera_pos, double roll, double pitch, double yaw, double range_roll, double range_pitch, double range_yaw, double **img, int width, int height) {
+void fishEyeCam(scene *s, vec3 camera_pos, double roll, double pitch, double yaw, double range_roll, double range_pitch, double range_yaw, rgb **img, int width, int height) {
 	int cnt = 0;
 	
-	#pragma omp parallel for shared(cnt)// num_threads(32)
+	#pragma omp parallel for// num_threads(32)
 	for (int i = 0; i < height; i++) {
 		double beam_roll = roll - range_roll/2 + i*range_roll/height;
 		for (int j = 0; j < width; j++) {
@@ -51,7 +52,7 @@ void fishEyeCam(scene *s, vec3 camera_pos, double roll, double pitch, double yaw
 					-sin(beam_yaw), cos(beam_yaw), 0,
 					0, 0, 1
 				);
-			double color = beam(s, camera_pos, norm_v3(rot_v3(rot_v3(rot_v3(angle, r_x), r_y), r_z)), 50);
+			rgb color = beam(s, camera_pos, norm_v3(rot_v3(rot_v3(rot_v3(angle, r_x), r_y), r_z)), 50);
 			img[i][j] = color;
 			//printf("%s", color > 0 ? "#" : " ");
 			cnt++;
@@ -62,7 +63,7 @@ void fishEyeCam(scene *s, vec3 camera_pos, double roll, double pitch, double yaw
 	}
 }
 
-void cam(scene *s, vec3 camera_pos, double roll, double pitch, double yaw, double **img, int width, int height) {
+void cam(scene *s, vec3 camera_pos, double roll, double pitch, double yaw, rgb **img, int width, int height) {
 	mat3 r_x = Mat3(
 			1, 0, 0,
 			0, cos(roll), sin(roll),
@@ -80,13 +81,14 @@ void cam(scene *s, vec3 camera_pos, double roll, double pitch, double yaw, doubl
 		);
 	
 	int cnt = 0;
-	#pragma omp parallel for shared(cnt)
+	scene s_cpy = *s;
+	#pragma omp parallel for firstprivate(s_cpy)
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
 			double sx = -2+j*4.0/width;
 			double sy = 2-i*4.0/height;
 			
-			img[i][j] = beam(s, camera_pos, norm_v3(rot_v3(rot_v3(rot_v3(Vec3(sx, sy, -4), r_x), r_y), r_z)), 40);
+			img[i][j] = beam(&s_cpy, camera_pos, norm_v3(rot_v3(rot_v3(rot_v3(Vec3(sx, sy, -4), r_x), r_y), r_z)), 40);
 		}
 		cnt += width;
 		printf("\rrendering... %d/%d (%d%%)", cnt, width*height, (int)((double)cnt/width/height*100));

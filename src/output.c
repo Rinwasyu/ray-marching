@@ -21,19 +21,20 @@
 #include <stdio.h>
 
 #include "output.h"
+#include "color.h"
 
-void output_image(char *filename, double **img, int width, int height) {
+void output_image(char *filename, rgb **img, int width, int height) {
 	FILE *fp;
 	if ((fp = fopen(filename, "wb")) == NULL) {
 		printf("failed to save\n");
 	}
 	
-	fprintf(fp, "P2\n# @Rinwasyu yay HAHAHA\n");
+	fprintf(fp, "P3\n# @Rinwasyu yay HAHAHA\n");
 	fprintf(fp, "%d %d\n", width, height);
 	fprintf(fp, "10000\n");
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
-			fprintf(fp, "%d ", (int)(img[i][j]*10000));
+			fprintf(fp, "%d %d %d ", (int)(img[i][j].r*10000), (int)(img[i][j].g*10000), (int)(img[i][j].b*10000));
 		}
 		fprintf(fp, "\n");
 	}

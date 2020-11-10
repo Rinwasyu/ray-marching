@@ -31,8 +31,10 @@ scene Scene(double (*sdf)()) {
 	return s;
 }
 
-double scene_sdf(scene *s, vec3 p) {
+double scene_sdf(scene *s, vec3 p, int color_frag) {
 	double min_dist = INF;
+	double dist;
+	rgb color = Rgb(0, 0, 0);
 	for (int i = 0; i < s->spheres_cnt; i++) {
 		if (s->spheres[i].active) {
 			mat3 r_x = Mat3(
@@ -50,7 +52,11 @@ double scene_sdf(scene *s, vec3 p) {
 					-sin(s->spheres[i].yaw), cos(s->spheres[i].yaw), 0,
 					0, 0, 1
 				);
-			min_dist = MIN(sdf_sphere(rot_v3(diff_v3(s->spheres[i].p, p), invert_m3(prod_m3(prod_m3(r_z, r_y), r_x))), s->spheres[i].radius), min_dist);
+			dist = sdf_sphere(rot_v3(diff_v3(s->spheres[i].p, p), invert_m3(prod_m3(prod_m3(r_z, r_y), r_x))), s->spheres[i].radius);
+			if (dist < min_dist) {
+				min_dist = dist;
+				color = s->spheres[i].color;
+			}
 		}
 	}
 	
@@ -71,7 +77,11 @@ double scene_sdf(scene *s, vec3 p) {
 					-sin(s->boxes[i].yaw), cos(s->boxes[i].yaw), 0,
 					0, 0, 1
 				);
-			min_dist = MIN(sdf_box(rot_v3(diff_v3(s->boxes[i].p, p), invert_m3(prod_m3(prod_m3(r_z, r_y), r_x))), s->boxes[i].b), min_dist);
+			dist = sdf_box(rot_v3(diff_v3(s->boxes[i].p, p), invert_m3(prod_m3(prod_m3(r_z, r_y), r_x))), s->boxes[i].b);
+			if (dist < min_dist) {
+				min_dist = dist;
+				color = s->boxes[i].color;
+			}
 		}
 	}
 	
@@ -92,9 +102,16 @@ double scene_sdf(scene *s, vec3 p) {
 					-sin(s->toruses[i].yaw), cos(s->toruses[i].yaw), 0,
 					0, 0, 1
 				);
-			min_dist = MIN(sdf_torus(rot_v3(diff_v3(s->toruses[i].p, p), invert_m3(prod_m3(prod_m3(r_z, r_y), r_x))), s->toruses[i].t), min_dist);
+			dist = sdf_torus(rot_v3(diff_v3(s->toruses[i].p, p), invert_m3(prod_m3(prod_m3(r_z, r_y), r_x))), s->toruses[i].t);
+			if (dist < min_dist) {
+				min_dist = dist;
+				color = s->toruses[i].color;
+			}
 		}
 	}
+	
+	if (color_frag)
+		s->near_obj_color = color;
 	
 	return min_dist;
 }

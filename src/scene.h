@@ -22,6 +22,7 @@
 #define SCENE_H
 
 #include "object.h"
+#include "color.h"
 
 struct s_scene;
 typedef struct s_scene scene;
@@ -34,9 +35,10 @@ struct s_scene {
 	int boxes_cnt;
 	int toruses_cnt;
 	double (*sdf)();
+	rgb near_obj_color;
 };
 
 scene Scene(double (*sdf)());
-double scene_sdf(scene *s, vec3 p);
+double scene_sdf(scene *s, vec3 p, int color_frag);
 
 #endif

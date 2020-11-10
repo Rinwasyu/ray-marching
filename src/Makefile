@@ -21,13 +21,13 @@
 
 PROG := main
 CC := gcc
-CFLAGS := -fopenmp -Wall -W -std=c99 -Ofast -march=native -flto
+CFLAGS := -Wall -W -std=c99 -Ofast -march=native -fopenmp -flto
 LDFLAGS := $(CFLAGS) -lm
 SRCS := $(wildcard *.c)
 OBJS := $(SRCS:.c=.o)
 DEPS := $(SRCS:.c=.d)
 
-all: main
+all: $(PROG)
 
 $(PROG): $(OBJS)
 	$(CC) -o $@ $^ $(LDFLAGS)
