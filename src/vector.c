@@ -68,6 +68,14 @@ inline vec3 prod_v3(vec3 A, vec3 B) {
 	return Vec3(A.x*B.x, A.y*B.y, A.z*B.z);
 }
 
+inline vec3 prod_v3n(vec3 A, double n) {
+	vec3 v;
+	v.x = A.x * n;
+	v.y = A.y * n;
+	v.z = A.z * n;
+	return v;
+}
+
 inline vec3 norm_v3(vec3 v) {
 	return Vec3(v.x/len_v3(v), v.y/len_v3(v), v.z/len_v3(v));
 }

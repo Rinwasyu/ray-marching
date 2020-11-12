@@ -35,6 +35,7 @@ double scene_sdf(scene *s, vec3 p, int color_frag) {
 	double min_dist = INF;
 	double dist;
 	rgb color = Rgb(0, 0, 0);
+	double diffuse, ambient, specular;
 	for (int i = 0; i < s->spheres_cnt; i++) {
 		if (s->spheres[i].active) {
 			mat3 r_x = Mat3(
@@ -56,6 +57,9 @@ double scene_sdf(scene *s, vec3 p, int color_frag) {
 			if (dist < min_dist) {
 				min_dist = dist;
 				color = s->spheres[i].color;
+				diffuse = s->spheres[i].diffuse;
+				ambient = s->spheres[i].ambient;
+				specular = s->spheres[i].specular;
 			}
 		}
 	}
@@ -81,6 +85,9 @@ double scene_sdf(scene *s, vec3 p, int color_frag) {
 			if (dist < min_dist) {
 				min_dist = dist;
 				color = s->boxes[i].color;
+				diffuse = s->boxes[i].diffuse;
+				ambient = s->boxes[i].ambient;
+				specular = s->boxes[i].specular;
 			}
 		}
 	}
@@ -106,12 +113,19 @@ double scene_sdf(scene *s, vec3 p, int color_frag) {
 			if (dist < min_dist) {
 				min_dist = dist;
 				color = s->toruses[i].color;
+				diffuse = s->toruses[i].diffuse;
+				ambient = s->toruses[i].ambient;
+				specular = s->toruses[i].specular;
 			}
 		}
 	}
 	
-	if (color_frag)
+	if (color_frag) {
 		s->near_obj_color = color;
+		s->near_obj_diffuse = diffuse;
+		s->near_obj_ambient = ambient;
+		s->near_obj_specular = specular;
+	}
 	
 	return min_dist;
 }

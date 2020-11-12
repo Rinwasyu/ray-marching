@@ -32,6 +32,9 @@ struct o_sphere {
 	double pitch;
 	double yaw;
 	rgb color;
+	double diffuse;
+	double ambient;
+	double specular;
 };
 
 struct o_box {
@@ -42,6 +45,9 @@ struct o_box {
 	double pitch;
 	double yaw;
 	rgb color;
+	double diffuse;
+	double ambient;
+	double specular;
 };
 
 struct o_torus {
@@ -52,14 +58,23 @@ struct o_torus {
 	double pitch;
 	double yaw;
 	rgb color;
+	double diffuse;
+	double ambient;
+	double specular;
 };
 
 typedef struct o_sphere sphere;
 typedef struct o_box box;
 typedef struct o_torus torus;
 
-sphere Sphere(vec3 p, double radius, double roll, double pitch, double yaw, rgb color);
-box Box(vec3 p, vec3 b, double roll, double pitch, double yaw, rgb color);
-torus Torus(vec3 p, vec2 t, double roll, double pitch, double yaw, rgb color);
+sphere Sphere(vec3 p, double radius,
+		double roll, double pitch, double yaw,
+		rgb color, double diffuse, double ambient, double specular);
+box Box(vec3 p, vec3 b,
+		double roll, double pitch, double yaw,
+		rgb color, double diffuse, double ambient, double specular);
+torus Torus(vec3 p, vec2 t,
+		double roll, double pitch, double yaw,
+		rgb color, double diffuse, double ambient, double specular);
 
 #endif

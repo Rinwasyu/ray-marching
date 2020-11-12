@@ -30,7 +30,8 @@
 void fishEyeCam(scene *s, vec3 camera_pos, double roll, double pitch, double yaw, double range_roll, double range_pitch, double range_yaw, rgb **img, int width, int height) {
 	int cnt = 0;
 	
-	#pragma omp parallel for// num_threads(32)
+	scene s_cpy = *s;
+	#pragma omp parallel for firstprivate(s_cpy)// num_threads(32)
 	for (int i = 0; i < height; i++) {
 		double beam_roll = roll - range_roll/2 + i*range_roll/height;
 		for (int j = 0; j < width; j++) {
@@ -52,7 +53,7 @@ void fishEyeCam(scene *s, vec3 camera_pos, double roll, double pitch, double yaw
 					-sin(beam_yaw), cos(beam_yaw), 0,
 					0, 0, 1
 				);
-			rgb color = beam(s, camera_pos, norm_v3(rot_v3(rot_v3(rot_v3(angle, r_x), r_y), r_z)), 50);
+			rgb color = beam(&s_cpy, camera_pos, norm_v3(rot_v3(rot_v3(rot_v3(angle, r_x), r_y), r_z)), 50, 10);
 			img[i][j] = color;
 			//printf("%s", color > 0 ? "#" : " ");
 			cnt++;
@@ -88,7 +89,7 @@ void cam(scene *s, vec3 camera_pos, double roll, double pitch, double yaw, rgb *
 			double sx = -2+j*4.0/width;
 			double sy = 2-i*4.0/height;
 			
-			img[i][j] = beam(&s_cpy, camera_pos, norm_v3(rot_v3(rot_v3(rot_v3(Vec3(sx, sy, -4), r_x), r_y), r_z)), 40);
+			img[i][j] = beam(&s_cpy, camera_pos, norm_v3(rot_v3(rot_v3(rot_v3(Vec3(sx, sy, -4), r_x), r_y), r_z)), 40, 10);
 		}
 		cnt += width;
 		printf("\rrendering... %d/%d (%d%%)", cnt, width*height, (int)((double)cnt/width/height*100));

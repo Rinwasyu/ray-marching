@@ -36,6 +36,9 @@ struct s_scene {
 	int toruses_cnt;
 	double (*sdf)();
 	rgb near_obj_color;
+	double near_obj_diffuse;
+	double near_obj_ambient;
+	double near_obj_specular;
 };
 
 scene Scene(double (*sdf)());

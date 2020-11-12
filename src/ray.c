@@ -39,11 +39,11 @@ int beam_hit(scene *s, vec3 p, vec3 v, double len) {
 	return 0;
 }
 
-rgb beam(scene *s, vec3 p, vec3 v, double len) {
+rgb beam(scene *s, vec3 p, vec3 v, double len, int reflections) {
 	rgb color = Rgb(0, 0, 0);
 	int split = len*50;
 	
-	for (int i = 0; i <= split; i++) {
+	for (int i = 1; i <= split; i++) {
 		double dist = len * i / split;
 		
 		vec3 here = Vec3(p.x + v.x*dist, p.y + v.y*dist, p.z + v.z*dist);
@@ -60,13 +60,31 @@ rgb beam(scene *s, vec3 p, vec3 v, double len) {
 					)
 				);
 			
+			double obj_diffuse = s->near_obj_diffuse;
+			double obj_ambient = s->near_obj_ambient;
+			double obj_specular = s->near_obj_specular;
+			
 			rgb diffuse = Rgb(0, 0, 0);
-			if (beam_hit(s, diff_v3(here, Vec3(v.x*len/split, v.y*len/split, v.z*len/split)), Vec3(-ray.x, -ray.y, -ray.z), 20) == 0){
+			if (beam_hit(s, Vec3(p.x + v.x*(len*(i-1)/split), p.y + v.y*(len*(i-1)/split), p.z + v.z*(len*(i-1)/split)), Vec3(-ray.x, -ray.y, -ray.z), 20) == 0){
 				double brightness = MAX(innerprod_v3(normal, ray), 0);
 				diffuse = Rgb(s->near_obj_color.r * brightness, s->near_obj_color.g * brightness, s->near_obj_color.b * brightness);
+				diffuse = prod_rgb(diffuse, obj_diffuse);
 			}
-			return diffuse;
+			
+			rgb ambient = Rgb(0, 0, 0);
+			ambient = Rgb(s->near_obj_color.r, s->near_obj_color.g, s->near_obj_color.b);
+			ambient = prod_rgb(ambient, obj_ambient);
+			
+			rgb specular = Rgb(0, 0, 0);
+			if (reflections > 0) {
+				specular = beam(s, here, sum_v3(v, prod_v3n(normal, 2*innerprod_v3(diff_v3(Vec3(0,0,0), v), normal))), len, reflections-1);
+				specular = prod_rgb(specular, obj_specular);
+			}
+			
+			color = sum_rgb(sum_rgb(diffuse, specular), ambient);
+			return color;
 		}
 	}
+	
 	return color;
 }

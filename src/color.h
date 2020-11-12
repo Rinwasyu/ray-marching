@@ -39,4 +39,7 @@ typedef struct c_rgba rgba;
 
 rgb Rgb(double r, double g, double b);
 
+rgb sum_rgb(rgb a, rgb b);
+rgb prod_rgb(rgb a, double b);
+
 #endif

@@ -46,6 +46,7 @@ vec2 abs_v2(vec2 v);
 vec3 sum_v3(vec3 A, vec3 B);
 vec3 diff_v3(vec3 A, vec3 B);
 vec3 prod_v3(vec3 A, vec3 B);
+vec3 prod_v3n(vec3 A, double n);
 vec3 norm_v3(vec3 v);
 double innerprod_v3(vec3 A, vec3 B);
 vec3 rot_v3(vec3 from, mat3 m);

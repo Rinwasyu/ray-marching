@@ -24,7 +24,7 @@
 #include "vector.h"
 #include "scene.h"
 
-rgb beam(scene *s, vec3 p, vec3 v, double len);
+rgb beam(scene *s, vec3 p, vec3 v, double len, int reflections);
 int beam_hit(scene *s, vec3 p, vec3 v, double len);
 
 #endif

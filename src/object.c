@@ -23,7 +23,9 @@
 #include "matrix.h"
 #include "color.h"
 
-inline sphere Sphere(vec3 p, double radius, double roll, double pitch, double yaw, rgb color) {
+inline sphere Sphere(vec3 p, double radius,
+		double roll, double pitch, double yaw,
+		rgb color, double diffuse, double ambient, double specular) {
 	sphere obj = {0};
 	obj.active = 1;
 	obj.p = p;
@@ -32,10 +34,15 @@ inline sphere Sphere(vec3 p, double radius, double roll, double pitch, double ya
 	obj.pitch = pitch;
 	obj.yaw = yaw;
 	obj.color = color;
+	obj.diffuse = diffuse;
+	obj.ambient = ambient;
+	obj.specular = specular;
 	return obj;
 }
 
-inline box Box(vec3 p, vec3 b, double roll, double pitch, double yaw, rgb color) {
+inline box Box(vec3 p, vec3 b,
+		double roll, double pitch, double yaw,
+		rgb color, double diffuse, double ambient, double specular) {
 	box obj = {0};
 	obj.active = 1;
 	obj.p = p;
@@ -44,10 +51,15 @@ inline box Box(vec3 p, vec3 b, double roll, double pitch, double yaw, rgb color)
 	obj.pitch = pitch;
 	obj.yaw = yaw;
 	obj.color = color;
+	obj.diffuse = diffuse;
+	obj.ambient = ambient;
+	obj.specular = specular;
 	return obj;
 }
 
-inline torus Torus(vec3 p, vec2 t, double roll, double pitch, double yaw, rgb color) {
+inline torus Torus(vec3 p, vec2 t,
+		double roll, double pitch, double yaw,
+		rgb color, double diffuse, double ambient, double specular) {
 	torus obj = {0};
 	obj.active = 1;
 	obj.p = p;
@@ -56,5 +68,8 @@ inline torus Torus(vec3 p, vec2 t, double roll, double pitch, double yaw, rgb co
 	obj.pitch = pitch;
 	obj.yaw = yaw;
 	obj.color = color;
+	obj.diffuse = diffuse;
+	obj.ambient = ambient;
+	obj.specular = specular;
 	return obj;
 }

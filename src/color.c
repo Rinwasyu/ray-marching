@@ -27,3 +27,11 @@ inline rgb Rgb(double r, double g, double b) {
 	color.b = b;
 	return color;
 }
+
+inline rgb sum_rgb(rgb a, rgb b) {
+	return Rgb(a.r + b.r, a.g + b.g, a.b + b.b);
+}
+
+inline rgb prod_rgb(rgb a, double b) {
+	return Rgb(a.r * b, a.g * b, a.b * b);
+}
